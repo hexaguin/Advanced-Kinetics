@@ -15,7 +15,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = AdvancedKinetics.modid, name = "Advanced Kinetics", version = "0.3")
+@Mod(modid = AdvancedKinetics.modid, name = "Advanced Kinetics", version = "Beta 0.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 public class AdvancedKinetics {
@@ -95,10 +95,10 @@ public class AdvancedKinetics {
         ItemStack accelerator = new ItemStack(acceleratorBlock);
         ItemStack accelerator16 = new ItemStack(acceleratorBlock,16);
         ItemStack launcher = new ItemStack(launcherBlock);
-        ItemStack northLauncher = new ItemStack(directionalLauncherBlock);
-        ItemStack eastLauncher = new ItemStack(directionalLauncherBlock);
-        ItemStack southLauncher = new ItemStack(directionalLauncherBlock);
-        ItemStack westLauncher = new ItemStack(directionalLauncherBlock);
+        ItemStack northLauncher = new ItemStack(directionalLauncherBlock,1,0);
+        ItemStack eastLauncher = new ItemStack(directionalLauncherBlock,1,1);
+        ItemStack southLauncher = new ItemStack(directionalLauncherBlock,1,2);
+        ItemStack westLauncher = new ItemStack(directionalLauncherBlock,1,3);
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
         ItemStack enderPearl = new ItemStack(Item.enderPearl);
