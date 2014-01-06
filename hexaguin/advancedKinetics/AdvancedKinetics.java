@@ -15,7 +15,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = AdvancedKinetics.modid, name = "Advanced Kinetics", version = "0.2")
+@Mod(modid = AdvancedKinetics.modid, name = "Advanced Kinetics", version = "0.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 public class AdvancedKinetics {
@@ -25,19 +25,13 @@ public class AdvancedKinetics {
 	public static Block launcherBlock;
 	public static Block heartSandBlock;
 	public static Block deflectorBlock;
-	public static Block northLauncherBlock;
-	public static Block eastLauncherBlock;
-	public static Block southLauncherBlock;
-	public static Block westLauncherBlock;
+	public static Block directionalLauncherBlock;
 	
 	public static int acceleratorID;
 	public static int launcherID;
 	public static int heartSandID;
 	public static int deflectorID;
-	public static int northLauncherID;
-	public static int eastLauncherID;
-	public static int southLauncherID;
-	public static int westLauncherID;
+	public static int directionalLauncherID;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -49,15 +43,11 @@ public class AdvancedKinetics {
 		launcherID = config.getBlock("launcherID", 531).getInt();
 		heartSandID = config.getBlock("heartSandID", 532).getInt();
 		deflectorID = config.getBlock("deflectorID", 533).getInt();
-		northLauncherID = config.getBlock("northLauncherID", 534).getInt();
-		eastLauncherID = config.getBlock("eastLauncherID", 535).getInt();
-		southLauncherID = config.getBlock("southLauncherID", 536).getInt();
-		westLauncherID = config.getBlock("westLauncherID", 537).getInt();
+		directionalLauncherID = config.getBlock("directionalLauncherID", 534).getInt();
 		
 		config.save();
 	}
 	
-	//TODO: Tools and weapons
 	
 	@EventHandler
 	public void load(FMLInitializationEvent event)
@@ -67,7 +57,7 @@ public class AdvancedKinetics {
 		acceleratorBlock = new BlockAcceleratorBlock(acceleratorID,Material.iron)
 		.setUnlocalizedName("acceleratorBlock")
 		.setHardness(1.5F)
-		.setTextureName("advancedkinetics:acceleratorBlock");
+		.setTextureName("hexaguin_advancedkinetics:acceleratorBlock");
         GameRegistry.registerBlock(acceleratorBlock, modid + acceleratorBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(acceleratorBlock, "Kinetic Accelerator");
         MinecraftForge.setBlockHarvestLevel(acceleratorBlock, "pickaxe", 1);
@@ -75,7 +65,7 @@ public class AdvancedKinetics {
         launcherBlock = new BlockLauncherBlock(launcherID,Material.iron)
         .setUnlocalizedName("launcherBlock")
         .setHardness(1.5F)
-        .setTextureName("advancedkinetics:launcherBlock");
+        .setTextureName("hexaguin_advancedkinetics:launcherBlock");
         GameRegistry.registerBlock(launcherBlock, modid + launcherBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(launcherBlock, "Kinetic Vertical Velocity Enhancer");
         MinecraftForge.setBlockHarvestLevel(launcherBlock, "pickaxe", 1);
@@ -90,46 +80,25 @@ public class AdvancedKinetics {
         GameRegistry.registerBlock(deflectorBlock, modid + deflectorBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(deflectorBlock, "Kinetic Deflector [WIP and SUPER buggy and broken]");
         
-        northLauncherBlock = new NorthLauncherBlock(northLauncherID,Material.iron)
-        .setUnlocalizedName("northLauncherBlock")
+        directionalLauncherBlock = new DirectionalLauncherBlock(directionalLauncherID,Material.iron)
+        .setUnlocalizedName("directionalLauncherBlock")
         .setHardness(1.5F)
         .setTextureName("advancedkinetics:northLauncher");
-        GameRegistry.registerBlock(northLauncherBlock, modid + northLauncherBlock.getUnlocalizedName().substring(5));
-        LanguageRegistry.addName(northLauncherBlock, "Kinetic Northbound Velocity Enhancer");
-        MinecraftForge.setBlockHarvestLevel(northLauncherBlock, "pickaxe", 1);
-        
-        eastLauncherBlock = new EastLauncherBlock(eastLauncherID,Material.iron)
-        .setUnlocalizedName("eastLauncherBlock")
-        .setHardness(1.5F)
-        .setTextureName("advancedkinetics:eastLauncher");
-        GameRegistry.registerBlock(eastLauncherBlock, modid + eastLauncherBlock.getUnlocalizedName().substring(5));
-        LanguageRegistry.addName(eastLauncherBlock, "Kinetic Eastbound Velocity Enhancer");
-        MinecraftForge.setBlockHarvestLevel(eastLauncherBlock, "pickaxe", 1);
-        
-        southLauncherBlock = new SouthLauncherBlock(southLauncherID,Material.iron)
-        .setUnlocalizedName("southLauncherBlock")
-        .setHardness(1.5F)
-        .setTextureName("advancedkinetics:southLauncher");
-        GameRegistry.registerBlock(southLauncherBlock, modid + southLauncherBlock.getUnlocalizedName().substring(5));
-        LanguageRegistry.addName(southLauncherBlock, "Kinetic Southbound Velocity Enhancer");
-        MinecraftForge.setBlockHarvestLevel(southLauncherBlock, "pickaxe", 1);
-        
-        westLauncherBlock = new WestLauncherBlock(westLauncherID,Material.iron)
-        .setUnlocalizedName("westLauncherBlock")
-        .setHardness(1.5F)
-        .setTextureName("advancedkinetics:westLauncher");
-        GameRegistry.registerBlock(westLauncherBlock, modid + westLauncherBlock.getUnlocalizedName().substring(5));
-        LanguageRegistry.addName(westLauncherBlock, "Kinetic Westbound Velocity Enhancer");
-        MinecraftForge.setBlockHarvestLevel(westLauncherBlock, "pickaxe", 1);
-        
+        GameRegistry.registerBlock(directionalLauncherBlock, ItemDirectionalLauncherBlock.class, modid + (directionalLauncherBlock.getUnlocalizedName().substring(5)));
+        LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 0), "Kinetic Northbound Velocity Enhancer");
+        LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 1), "Kinetic Eastbound Velocity Enhancer");
+        LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 2), "Kinetic Southbound Velocity Enhancer");
+        LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 3), "Kinetic Westbound Velocity Enhancer");
+        MinecraftForge.setBlockHarvestLevel(directionalLauncherBlock, "pickaxe", 1);
+       
         //adding Recipes
         ItemStack accelerator = new ItemStack(acceleratorBlock);
         ItemStack accelerator16 = new ItemStack(acceleratorBlock,16);
         ItemStack launcher = new ItemStack(launcherBlock);
-        ItemStack northLauncher = new ItemStack(northLauncherBlock);
-        ItemStack eastLauncher = new ItemStack(eastLauncherBlock);
-        ItemStack southLauncher = new ItemStack(southLauncherBlock);
-        ItemStack westLauncher = new ItemStack(westLauncherBlock);
+        ItemStack northLauncher = new ItemStack(directionalLauncherBlock);
+        ItemStack eastLauncher = new ItemStack(directionalLauncherBlock);
+        ItemStack southLauncher = new ItemStack(directionalLauncherBlock);
+        ItemStack westLauncher = new ItemStack(directionalLauncherBlock);
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
         ItemStack enderPearl = new ItemStack(Item.enderPearl);
