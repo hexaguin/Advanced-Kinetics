@@ -6,5 +6,8 @@ Start.java
 /ibxm/*
 /net/*
 /paulscode/*
+/openmods/*
+/integration/*
 /assets/forge/*
+/assets/openmodslib/*
 deobfuscation*

@@ -25,13 +25,13 @@ public class AdvancedKinetics {
 	public static Block acceleratorBlock;
 	public static Block launcherBlock;
 	public static Block heartSandBlock;
-	public static Block deflectorBlock;
+	public static Block gravityInverterBlock;
 	public static Block directionalLauncherBlock;
 	
 	public static int acceleratorID;
 	public static int launcherID;
 	public static int heartSandID;
-	public static int deflectorID;
+	public static int gravityInverterID;
 	public static int directionalLauncherID;
 	
 	@EventHandler
@@ -43,7 +43,7 @@ public class AdvancedKinetics {
 		acceleratorID = config.getBlock("acceleratorID", 530).getInt();
 		launcherID = config.getBlock("launcherID", 531).getInt();
 		heartSandID = config.getBlock("heartSandID", 532).getInt();
-		deflectorID = config.getBlock("deflectorID", 533).getInt();
+		gravityInverterID = config.getBlock("gravityInverterID", 533).getInt();
 		directionalLauncherID = config.getBlock("directionalLauncherID", 534).getInt();
 		
 		config.save();
@@ -53,6 +53,8 @@ public class AdvancedKinetics {
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
+		//tileentity registration
+		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityGravityInverter.class, "TileEntityGravityInverter");
 			
         //adding blocks
 		acceleratorBlock = new BlockAcceleratorBlock(acceleratorID,Material.iron)
@@ -76,10 +78,10 @@ public class AdvancedKinetics {
         GameRegistry.registerBlock(heartSandBlock, modid + heartSandBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(heartSandBlock, "Heartsand [WIP]");
         
-        deflectorBlock = new DeflectorBlock(deflectorID,Material.web)
-        .setUnlocalizedName("deflectorBlock");
-        GameRegistry.registerBlock(deflectorBlock, modid + deflectorBlock.getUnlocalizedName().substring(5));
-        LanguageRegistry.addName(deflectorBlock, "Kinetic Deflector [WIP and SUPER buggy and broken]");
+        gravityInverterBlock = new GravityInverterBlock(gravityInverterID,Material.iron)
+        .setUnlocalizedName("gravityInverterBlock");
+        GameRegistry.registerBlock(gravityInverterBlock, modid + gravityInverterBlock.getUnlocalizedName().substring(5));
+        LanguageRegistry.addName(gravityInverterBlock, "Kinetic Gravity Inverter");
         
         directionalLauncherBlock = new DirectionalLauncherBlock(directionalLauncherID,Material.glass)
         .setUnlocalizedName("directionalLauncherBlock")
