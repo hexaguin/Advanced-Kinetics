@@ -1,0 +1,13 @@
+forge*
+fml*
+mcpmod.info
+Start.java
+/cpw/*
+/ibxm/*
+/net/*
+/paulscode/*
+/openmods/*
+/integration/*
+/assets/forge/*
+/assets/openmodslib/*
+deobfuscation*
