@@ -1,6 +1,7 @@
 package hexaguin.advancedKinetics;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -62,9 +63,9 @@ public class AdvancedKinetics {
         LanguageRegistry.addName(acceleratorBlock, "Kinetic Accelerator");
         MinecraftForge.setBlockHarvestLevel(acceleratorBlock, "pickaxe", 1);
         
-        launcherBlock = new BlockLauncherBlock(launcherID,Material.iron)
+        launcherBlock = new BlockLauncherBlock(launcherID,Material.glass)
         .setUnlocalizedName("launcherBlock")
-        .setHardness(1.5F)
+        .setHardness(3F)
         .setTextureName("hexaguin_advancedkinetics:launcherBlock");
         GameRegistry.registerBlock(launcherBlock, modid + launcherBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(launcherBlock, "Kinetic Vertical Velocity Enhancer");
@@ -80,9 +81,9 @@ public class AdvancedKinetics {
         GameRegistry.registerBlock(deflectorBlock, modid + deflectorBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(deflectorBlock, "Kinetic Deflector [WIP and SUPER buggy and broken]");
         
-        directionalLauncherBlock = new DirectionalLauncherBlock(directionalLauncherID,Material.iron)
+        directionalLauncherBlock = new DirectionalLauncherBlock(directionalLauncherID,Material.glass)
         .setUnlocalizedName("directionalLauncherBlock")
-        .setHardness(1.5F)
+        .setHardness(3F)
         .setTextureName("advancedkinetics:northLauncher");
         GameRegistry.registerBlock(directionalLauncherBlock, ItemDirectionalLauncherBlock.class, modid + (directionalLauncherBlock.getUnlocalizedName().substring(5)));
         LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 0), "Kinetic Northbound Velocity Enhancer");
