@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Property;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -27,12 +28,17 @@ public class AdvancedKinetics {
 	public static Block heartSandBlock;
 	public static Block gravityInverterBlock;
 	public static Block directionalLauncherBlock;
+	public static Block gravityWellBlock;
 	
 	public static int acceleratorID;
 	public static int launcherID;
 	public static int heartSandID;
 	public static int gravityInverterID;
 	public static int directionalLauncherID;
+	public static int gravityWellID;
+	
+	public static Property gravityInverterRange;
+	public static Property gravityWellRange;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -45,6 +51,10 @@ public class AdvancedKinetics {
 		heartSandID = config.getBlock("heartSandID", 532).getInt();
 		gravityInverterID = config.getBlock("gravityInverterID", 533).getInt();
 		directionalLauncherID = config.getBlock("directionalLauncherID", 534).getInt();
+		gravityWellID = config.getBlock("gravityWellID", 535).getInt();
+		
+		gravityInverterRange = config.get("tweaks", "gravityInverterRange", 8);
+		gravityWellRange = config.get("tweaks", "gravityWellRange", 16);
 		
 		config.save();
 	}
@@ -79,14 +89,24 @@ public class AdvancedKinetics {
         LanguageRegistry.addName(heartSandBlock, "Heartsand [WIP]");
         
         gravityInverterBlock = new GravityInverterBlock(gravityInverterID,Material.iron)
+        .setHardness(1.5F)
+        .setTextureName("hexaguin_advancedkinetics:gravityInverterBlock")
         .setUnlocalizedName("gravityInverterBlock");
         GameRegistry.registerBlock(gravityInverterBlock, modid + gravityInverterBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(gravityInverterBlock, "Kinetic Gravity Inverter");
+        MinecraftForge.setBlockHarvestLevel(gravityInverterBlock, "pickaxe", 1);
+        
+        gravityWellBlock = new GravityWellBlock(gravityWellID,Material.iron)
+        .setHardness(1.5F)
+        .setTextureName("hexaguin_advancedkinetics:gravityWellBlock")
+        .setUnlocalizedName("gravityWellBlock");
+        GameRegistry.registerBlock(gravityWellBlock, modid + gravityWellBlock.getUnlocalizedName().substring(5));
+        LanguageRegistry.addName(gravityWellBlock, "Kinetic Gravity Well");
+        MinecraftForge.setBlockHarvestLevel(gravityWellBlock, "pickaxe", 1);
         
         directionalLauncherBlock = new DirectionalLauncherBlock(directionalLauncherID,Material.glass)
         .setUnlocalizedName("directionalLauncherBlock")
-        .setHardness(3F)
-        .setTextureName("advancedkinetics:northLauncher");
+        .setHardness(3F);
         GameRegistry.registerBlock(directionalLauncherBlock, ItemDirectionalLauncherBlock.class, modid + (directionalLauncherBlock.getUnlocalizedName().substring(5)));
         LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 0), "Kinetic Northbound Velocity Enhancer");
         LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 1), "Kinetic Eastbound Velocity Enhancer");
@@ -102,10 +122,13 @@ public class AdvancedKinetics {
         ItemStack eastLauncher = new ItemStack(directionalLauncherBlock,1,1);
         ItemStack southLauncher = new ItemStack(directionalLauncherBlock,1,2);
         ItemStack westLauncher = new ItemStack(directionalLauncherBlock,1,3);
+        ItemStack inverter = new ItemStack(gravityInverterBlock);
+        ItemStack gravityWell = new ItemStack(gravityWellBlock);
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
         ItemStack enderPearl = new ItemStack(Item.enderPearl);
         ItemStack ironIngot = new ItemStack(Item.ingotIron);
+        ItemStack diamond = new ItemStack(Item.diamond);
         
         GameRegistry.addRecipe(accelerator16, new Object[] {
         	"XYX",
@@ -153,6 +176,22 @@ public class AdvancedKinetics {
             	'X',enderPearl,
             	'Y',launcher,
             	'Z',quartz
+        });
+        GameRegistry.addRecipe(inverter, new Object[] {
+        		" Y ",
+        		"XXX",
+        		"ZZZ",
+        		'X',launcher,
+        		'Y',enderPearl,
+        		'Z',accelerator
+        });
+        GameRegistry.addRecipe(gravityWell, new Object[] {
+        		"XYX",
+        		"YZY",
+        		"XYX",
+        		'X', inverter,
+        		'Y', diamond,
+        		'Z', enderPearl
         });
    	}
 }
