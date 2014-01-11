@@ -65,7 +65,7 @@ public class AdvancedKinetics {
 		directionalLauncherID = config.getBlock("directionalLauncherID", 534).getInt();
 		gravityWellID = config.getBlock("gravityWellID", 535).getInt();
 		pearlActivatorID = config.getBlock("pearlActivatorID", 536).getInt();
-		ruggedPearlID = config.getItem("ruggedPearlUD", 537).getInt();
+		ruggedPearlID = config.getItem("ruggedPearlID", 537).getInt();
 		
 		gravityInverterRange = config.get("tweaks", "gravityInverterRange", 8);
 		gravityWellRange = config.get("tweaks", "gravityWellRange", 16);
@@ -142,6 +142,7 @@ public class AdvancedKinetics {
         .setTextureName("hexaguin_advancedkinetics:ruggedPearl")
         .setUnlocalizedName("itemRuggedPearl");
         LanguageRegistry.addName(itemRuggedPearl, "Rugged Ender Pearl");
+        
         
         //adding entities
         
