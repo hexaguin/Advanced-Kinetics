@@ -3,17 +3,20 @@ package hexaguin.advancedKinetics;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -29,6 +32,9 @@ public class AdvancedKinetics {
 	public static Block gravityInverterBlock;
 	public static Block directionalLauncherBlock;
 	public static Block gravityWellBlock;
+	public static Block pearlActivatorBlock;
+	
+	public static Item itemRuggedPearl;
 	
 	public static int acceleratorID;
 	public static int launcherID;
@@ -36,9 +42,15 @@ public class AdvancedKinetics {
 	public static int gravityInverterID;
 	public static int directionalLauncherID;
 	public static int gravityWellID;
+	public static int pearlActivatorID;
+	public static int ruggedPearlID;
 	
 	public static Property gravityInverterRange;
 	public static Property gravityWellRange;
+	public static Property ruggedPearlLifespan;
+	
+	private static int modEntityID = 0;
+
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -52,9 +64,12 @@ public class AdvancedKinetics {
 		gravityInverterID = config.getBlock("gravityInverterID", 533).getInt();
 		directionalLauncherID = config.getBlock("directionalLauncherID", 534).getInt();
 		gravityWellID = config.getBlock("gravityWellID", 535).getInt();
+		pearlActivatorID = config.getBlock("pearlActivatorID", 536).getInt();
+		ruggedPearlID = config.getItem("ruggedPearlUD", 537).getInt();
 		
 		gravityInverterRange = config.get("tweaks", "gravityInverterRange", 8);
 		gravityWellRange = config.get("tweaks", "gravityWellRange", 16);
+		ruggedPearlLifespan = config.get("tweaks", "ruggedPearlLifespan", 1600);
 		
 		config.save();
 	}
@@ -113,6 +128,25 @@ public class AdvancedKinetics {
         LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 2), "Kinetic Southbound Velocity Enhancer");
         LanguageRegistry.addName(new ItemStack(directionalLauncherBlock,1, 3), "Kinetic Westbound Velocity Enhancer");
         MinecraftForge.setBlockHarvestLevel(directionalLauncherBlock, "pickaxe", 1);
+        
+        pearlActivatorBlock = new pearlActivatorBlock(pearlActivatorID,Material.iron)
+        .setHardness(1.5F)
+        .setTextureName("hexaguin_advancedkinetics:pearlActivatorBlock")
+        .setUnlocalizedName("pearlActivatorBlock");
+        GameRegistry.registerBlock(pearlActivatorBlock, modid + pearlActivatorBlock.getUnlocalizedName().substring(5));
+        LanguageRegistry.addName(pearlActivatorBlock, "Rugged Pearl Activator");
+        MinecraftForge.setBlockHarvestLevel(pearlActivatorBlock, "pickaxe", 1);
+        
+        //items
+        itemRuggedPearl = new ItemRuggedPearl(ruggedPearlID)
+        .setTextureName("hexaguin_advancedkinetics:ruggedPearl")
+        .setUnlocalizedName("itemRuggedPearl");
+        LanguageRegistry.addName(itemRuggedPearl, "Rugged Ender Pearl");
+        
+        //adding entities
+        
+        EntityRegistry.registerModEntity(EntityRuggedPearl.class, "Rugged Pearl", ++modEntityID, this, 64, 10, true);
+        RenderingRegistry.registerEntityRenderingHandler(EntityRuggedPearl.class, new RenderSnowball(itemRuggedPearl));
        
         //adding Recipes
         ItemStack accelerator = new ItemStack(acceleratorBlock);
