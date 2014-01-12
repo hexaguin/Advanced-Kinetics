@@ -33,6 +33,7 @@ public class AdvancedKinetics {
 	public static Block directionalLauncherBlock;
 	public static Block gravityWellBlock;
 	public static Block pearlActivatorBlock;
+	public static Block gravityNullifierBlock;
 	
 	public static Item itemRuggedPearl;
 	
@@ -44,11 +45,13 @@ public class AdvancedKinetics {
 	public static int gravityWellID;
 	public static int pearlActivatorID;
 	public static int ruggedPearlID;
+	public static int gravityNullifierID;
 	
 	public static Property gravityInverterRange;
 	public static Property gravityWellRange;
 	public static Property gravityWellPower;
 	public static Property ruggedPearlLifespan;
+	public static Property airResistanceInNullifier;
 	
 	private static int modEntityID = 0;
 
@@ -67,11 +70,13 @@ public class AdvancedKinetics {
 		gravityWellID = config.getBlock("gravityWellID", 535).getInt();
 		pearlActivatorID = config.getBlock("pearlActivatorID", 536).getInt();
 		ruggedPearlID = config.getItem("ruggedPearlID", 537).getInt();
+		gravityNullifierID = config.getBlock("gravityNullifierID", 538).getInt();
 		
 		gravityInverterRange = config.get("tweaks", "gravityInverterRange", 8);
 		gravityWellRange = config.get("tweaks", "gravityWellRange", 16);
 		gravityWellPower = config.get("tweaks", "gravityWellPower", 100);
 		ruggedPearlLifespan = config.get("tweaks", "ruggedPearlLifespan", 1600);
+		airResistanceInNullifier = config.get("tweaks", "airResistanceInNullifier", false);
 		
 		config.save();
 	}
@@ -82,6 +87,8 @@ public class AdvancedKinetics {
 	{
 		//tileentity registration
 		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityGravityInverter.class, "TileEntityGravityInverter");
+		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityGravityWell.class, "TileEntityGravityWell");
+		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityGravityNullifier.class, "TileEntityGravityNullifier");
 			
         //adding blocks
 		acceleratorBlock = new BlockAcceleratorBlock(acceleratorID,Material.iron)
@@ -138,6 +145,14 @@ public class AdvancedKinetics {
         GameRegistry.registerBlock(pearlActivatorBlock, modid + pearlActivatorBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(pearlActivatorBlock, "Rugged Pearl Activator");
         MinecraftForge.setBlockHarvestLevel(pearlActivatorBlock, "pickaxe", 1);
+        
+        gravityNullifierBlock = new GravityNullifierBlock(gravityNullifierID,Material.iron)
+        .setHardness(1.5F)
+        .setTextureName("hexaguin_advancedkinetics:gravityNullifierBlock")
+        .setUnlocalizedName("gravityNullifierBlock");
+        GameRegistry.registerBlock(gravityNullifierBlock, modid + gravityNullifierBlock.getUnlocalizedName().substring(5));
+        LanguageRegistry.addName(gravityNullifierBlock, "Kinetic Gravity Nullifier");
+        MinecraftForge.setBlockHarvestLevel(gravityNullifierBlock, "pickaxe", 1);
         
         //items
         itemRuggedPearl = new ItemRuggedPearl(ruggedPearlID)
