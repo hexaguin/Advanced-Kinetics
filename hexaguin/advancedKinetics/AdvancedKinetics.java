@@ -47,6 +47,7 @@ public class AdvancedKinetics {
 	
 	public static Property gravityInverterRange;
 	public static Property gravityWellRange;
+	public static Property gravityWellPower;
 	public static Property ruggedPearlLifespan;
 	
 	private static int modEntityID = 0;
@@ -69,6 +70,7 @@ public class AdvancedKinetics {
 		
 		gravityInverterRange = config.get("tweaks", "gravityInverterRange", 8);
 		gravityWellRange = config.get("tweaks", "gravityWellRange", 16);
+		gravityWellPower = config.get("tweaks", "gravityWellPower", 100);
 		ruggedPearlLifespan = config.get("tweaks", "ruggedPearlLifespan", 1600);
 		
 		config.save();
@@ -159,11 +161,15 @@ public class AdvancedKinetics {
         ItemStack westLauncher = new ItemStack(directionalLauncherBlock,1,3);
         ItemStack inverter = new ItemStack(gravityInverterBlock);
         ItemStack gravityWell = new ItemStack(gravityWellBlock);
+        ItemStack ruggedPearl = new ItemStack(itemRuggedPearl);
+        ItemStack pearlActivator = new ItemStack(pearlActivatorBlock);
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
         ItemStack enderPearl = new ItemStack(Item.enderPearl);
         ItemStack ironIngot = new ItemStack(Item.ingotIron);
         ItemStack diamond = new ItemStack(Item.diamond);
+        ItemStack stone = new ItemStack(Block.stone);
+        ItemStack redstoneTorch = new ItemStack(Block.torchRedstoneActive);
         
         GameRegistry.addRecipe(accelerator16, new Object[] {
         	"XYX",
@@ -227,6 +233,15 @@ public class AdvancedKinetics {
         		'X', inverter,
         		'Y', diamond,
         		'Z', enderPearl
+        });
+        GameRegistry.addShapelessRecipe(ruggedPearl, redstone, enderPearl, stone);
+        GameRegistry.addRecipe(pearlActivator, new Object[] {
+        		"XYX",
+        		"XZX",
+        		"XXX",
+        		'X', ironIngot,
+        		'Y', redstoneTorch,
+        		'Z', ruggedPearl
         });
    	}
 }

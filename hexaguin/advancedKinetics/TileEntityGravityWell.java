@@ -15,7 +15,7 @@ import net.minecraft.util.AxisAlignedBB;
 public class TileEntityGravityWell extends TileEntity {
 	public void updateEntity(){
 		if (!worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord)){
-			pullEntities(AdvancedKinetics.gravityWellRange.getInt(),0.05D);
+			pullEntities(AdvancedKinetics.gravityWellRange.getInt(), AdvancedKinetics.gravityWellPower.getInt()*0.01*0.025); //0.01 to make a percent, 0.025 is base power
 		}
 	}
 	
@@ -29,9 +29,9 @@ public class TileEntityGravityWell extends TileEntity {
         { //TODO: make this stronger at center instead of edge
 			entity = (Entity)iterator.next();
 			
-			entity.motionX+=speed*(this.xCoord-entity.posX);
-			entity.motionY+=speed*(this.yCoord-entity.posY);
-			entity.motionZ+=speed*(this.zCoord-entity.posZ);
+			entity.motionX+=speed*(0.5+this.xCoord-entity.posX);
+			entity.motionY+=speed*(0.5+this.yCoord-entity.posY);
+			entity.motionZ+=speed*(0.5+this.zCoord-entity.posZ);
         }
 	}
 	
