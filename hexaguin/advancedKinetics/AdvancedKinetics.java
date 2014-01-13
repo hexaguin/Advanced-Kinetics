@@ -178,6 +178,8 @@ public class AdvancedKinetics {
         ItemStack gravityWell = new ItemStack(gravityWellBlock);
         ItemStack ruggedPearl = new ItemStack(itemRuggedPearl);
         ItemStack pearlActivator = new ItemStack(pearlActivatorBlock);
+        ItemStack nullifier = new ItemStack(gravityNullifierBlock);
+        ItemStack nullifiers2 = new ItemStack(gravityNullifierBlock, 2);
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
         ItemStack enderPearl = new ItemStack(Item.enderPearl);
@@ -258,6 +260,7 @@ public class AdvancedKinetics {
         		'Y', redstoneTorch,
         		'Z', ruggedPearl
         });
+        GameRegistry.addShapelessRecipe(nullifiers2, inverter, redstone, stone, enderPearl);
    	}
 }
 
