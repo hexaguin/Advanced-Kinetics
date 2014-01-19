@@ -36,6 +36,7 @@ public class AdvancedKinetics {
 	public static Block gravityNullifierBlock;
 	
 	public static Item itemRuggedPearl;
+	public static Item itemNegator;
 	
 	public static int acceleratorID;
 	public static int launcherID;
@@ -46,6 +47,7 @@ public class AdvancedKinetics {
 	public static int pearlActivatorID;
 	public static int ruggedPearlID;
 	public static int gravityNullifierID;
+	public static int negatorID;
 	
 	public static Property gravityInverterRange;
 	public static Property gravityWellRange;
@@ -71,6 +73,7 @@ public class AdvancedKinetics {
 		pearlActivatorID = config.getBlock("pearlActivatorID", 536).getInt();
 		ruggedPearlID = config.getItem("ruggedPearlID", 537).getInt();
 		gravityNullifierID = config.getBlock("gravityNullifierID", 538).getInt();
+		negatorID = config.getItem("negatorID", 539).getInt();
 		
 		gravityInverterRange = config.get("tweaks", "gravityInverterRange", 8);
 		gravityWellRange = config.get("tweaks", "gravityWellRange", 16);
@@ -160,6 +163,10 @@ public class AdvancedKinetics {
         .setUnlocalizedName("itemRuggedPearl");
         LanguageRegistry.addName(itemRuggedPearl, "Rugged Ender Pearl");
         
+        itemNegator = new ItemNegator(negatorID)
+        .setTextureName("hexaguin_advancedkinetics:negator")
+        .setUnlocalizedName("itemNegator");
+        LanguageRegistry.addName(itemNegator, "Kinetic Negator");
         
         //adding entities
         
@@ -180,6 +187,8 @@ public class AdvancedKinetics {
         ItemStack pearlActivator = new ItemStack(pearlActivatorBlock);
         ItemStack nullifier = new ItemStack(gravityNullifierBlock);
         ItemStack nullifiers2 = new ItemStack(gravityNullifierBlock, 2);
+        ItemStack negators64 = new ItemStack(itemNegator, 64);
+        
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
         ItemStack enderPearl = new ItemStack(Item.enderPearl);
@@ -261,6 +270,13 @@ public class AdvancedKinetics {
         		'Z', ruggedPearl
         });
         GameRegistry.addShapelessRecipe(nullifiers2, inverter, redstone, stone, enderPearl);
+        GameRegistry.addRecipe(negators64, new Object[] {
+        		"X X",
+        		" Y ",
+        		"X X",
+        		'X',enderPearl,
+        		'Y',ruggedPearl
+        });
    	}
 }
 
