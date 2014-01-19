@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -34,17 +35,33 @@ public class TileEntityGravityNullifier extends TileEntity {
 		while (iterator.hasNext())
         {
 			entity = (Entity)iterator.next();
-			entity.motionY+=speed;
-			if (AdvancedKinetics.airResistanceInNullifier.getBoolean(false) == false) {
-				
-				entity.motionX *= airFactor;
-				
-				if (entity.motionY>0){
-					entity.motionY *= upFactor;
-				} 
-				
-				entity.motionZ *= airFactor;
-			}
+			
+			if (entity instanceof EntityPlayer) {
+				if ( !(((EntityPlayer)entity).isPotionActive(Potion.jump)) ) {
+					entity.motionY+=speed;
+					if (AdvancedKinetics.airResistanceInNullifier.getBoolean(false) == false) {
+						
+						entity.motionX *= airFactor;
+						
+						if (entity.motionY>0){
+							entity.motionY *= upFactor;
+						} 
+						
+						entity.motionZ *= airFactor;
+					}
+				}} else {
+					entity.motionY+=speed;
+					if (AdvancedKinetics.airResistanceInNullifier.getBoolean(false) == false) {
+						
+						entity.motionX *= airFactor;
+						
+						if (entity.motionY>0){
+							entity.motionY *= upFactor;
+						} 
+						
+						entity.motionZ *= airFactor;
+					}
+				}
 			
         }
 	}
