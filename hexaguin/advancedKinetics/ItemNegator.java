@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class ItemNegator extends Item {
 	public ItemNegator(int par1) {
 		super(par1);
-		this.setCreativeTab(CreativeTabs.tabMisc);
+		this.setCreativeTab(CreativeTabs.tabTransport);
 	}
 	
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)

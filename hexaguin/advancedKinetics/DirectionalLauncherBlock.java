@@ -17,7 +17,7 @@ public class DirectionalLauncherBlock extends Block {
 
 	public DirectionalLauncherBlock(int par1, Material par2Material) {
 		super(par1, par2Material);
-		this.setCreativeTab(CreativeTabs.tabDecorations);
+		this.setCreativeTab(CreativeTabs.tabTransport);
 	}
 	
 	public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)

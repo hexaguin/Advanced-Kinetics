@@ -10,7 +10,7 @@ public class GravityNullifierBlock extends BlockContainer {
 	
 	public GravityNullifierBlock(int par1, Material par2Material) {
 		super(par1, par2Material);
-		this.setCreativeTab(CreativeTabs.tabDecorations);
+		this.setCreativeTab(CreativeTabs.tabRedstone);
 	}
 	
 	@Override
