@@ -85,6 +85,10 @@ public class DetectorBlock extends BlockContainer {
 			{
 				return icons[2]; 
 			}
+		case 3: //Player
+			{
+				return icons[3];
+			}
 		 default:
          {
                 System.out.println("Invalid metadata for " + this.getUnlocalizedName());
@@ -96,7 +100,7 @@ public class DetectorBlock extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
-	    for (int var4 = 0; var4 < 3; ++var4)
+	    for (int var4 = 0; var4 < 4; ++var4)
 	    {
 	        par3List.add(new ItemStack(par1, 1, var4));
 	    }

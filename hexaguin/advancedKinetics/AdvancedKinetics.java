@@ -172,6 +172,7 @@ public class AdvancedKinetics {
         LanguageRegistry.addName(new ItemStack(detectorBlock,1, 0), "Owner Detector");
         LanguageRegistry.addName(new ItemStack(detectorBlock,1, 1), "Living Detector");
         LanguageRegistry.addName(new ItemStack(detectorBlock,1, 2), "Entity Detector");
+        LanguageRegistry.addName(new ItemStack(detectorBlock,1, 3), "Player Detector");
         MinecraftForge.setBlockHarvestLevel(detectorBlock, "pickaxe", 1);
         
         //items
@@ -205,14 +206,24 @@ public class AdvancedKinetics {
         ItemStack nullifier = new ItemStack(gravityNullifierBlock);
         ItemStack nullifiers2 = new ItemStack(gravityNullifierBlock, 2);
         ItemStack negators64 = new ItemStack(itemNegator, 64);
+        ItemStack anythingDetector = new ItemStack(detectorBlock,1,2);
+        ItemStack livingDetector = new ItemStack(detectorBlock,1,1);
+        ItemStack playerDetector = new ItemStack(detectorBlock,1,3);
+        ItemStack ownerDetector = new ItemStack(detectorBlock,1,0);
         
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
         ItemStack enderPearl = new ItemStack(Item.enderPearl);
         ItemStack ironIngot = new ItemStack(Item.ingotIron);
         ItemStack diamond = new ItemStack(Item.diamond);
+        ItemStack spiderEye = new ItemStack(Item.spiderEye);
+        ItemStack enderEye = new ItemStack(Item.eyeOfEnder);
+        ItemStack blazeRod = new ItemStack(Item.blazeRod);
         ItemStack stone = new ItemStack(Block.stone);
         ItemStack redstoneTorch = new ItemStack(Block.torchRedstoneActive);
+        ItemStack stonePressurePlate = new ItemStack(70,1,0);
+        ItemStack ironPressurePlate = new ItemStack(148,1,0);
+        ItemStack goldPressurePlate = new ItemStack(147,1,0);
         
         GameRegistry.addRecipe(accelerator16, new Object[] {
         	"XYX",
@@ -294,6 +305,25 @@ public class AdvancedKinetics {
         		'X',enderPearl,
         		'Y',ruggedPearl
         });
+        GameRegistry.addRecipe(anythingDetector, new Object[] {
+        		"XYX",
+        		"ZAZ",
+        		"XYX",
+        		'X',stonePressurePlate,
+        		'Y',ironPressurePlate,
+        		'Z',goldPressurePlate,
+        		'A',inverter
+        });
+        GameRegistry.addRecipe(livingDetector, new Object[]{
+        		"X",
+        		"Y",
+        		"X",
+        		'X',spiderEye,
+        		'Y',anythingDetector
+        });
+        GameRegistry.addShapelessRecipe(playerDetector, livingDetector, blazeRod);
+        GameRegistry.addShapelessRecipe(ownerDetector, playerDetector, enderEye);
+        
    	}
 }
 

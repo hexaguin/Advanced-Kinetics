@@ -61,9 +61,13 @@ public class TileEntityDetector extends TileEntity {
 				if(entity instanceof EntityLivingBase){
 					detected=true;
 				}
-			}else
+			}else if(meta==2)
 			{//Any entity
 				detected=true;
+			} else {//player only
+				if(entity instanceof EntityPlayer){
+					detected=true;
+				}
 			}
 				
 		}

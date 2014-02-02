@@ -30,6 +30,11 @@ public class ItemDetectorBlock extends ItemBlock {
 	                    name = "all";
 	                    break;
 	             }
+	             case 3:
+	             {
+	            	 name = "player";
+	            	 break;
+	             }
 	             
 	             default: name = "broken";
 	       }
