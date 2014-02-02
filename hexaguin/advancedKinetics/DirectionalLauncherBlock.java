@@ -1,5 +1,4 @@
 package hexaguin.advancedKinetics;
-//TODO add sided textures
 import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
