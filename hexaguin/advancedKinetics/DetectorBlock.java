@@ -48,6 +48,9 @@ public class DetectorBlock extends BlockContainer {
     	 return t.power;
     }
     
+    public boolean canProvidePower() {
+		return true;
+	}
 	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
