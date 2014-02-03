@@ -12,7 +12,6 @@ public class HeartSandBlock extends Block
     public HeartSandBlock(int par1, Material par2Material)
     {
         super(par1, par2Material);
-        this.setCreativeTab(CreativeTabs.tabBlock);
         this.slipperiness=-1F;
     }
    

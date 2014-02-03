@@ -11,7 +11,7 @@ public class ItemRuggedPearl extends Item {
 
 	public ItemRuggedPearl(int par1) {
 		super(par1);
-		this.setCreativeTab(CreativeTabs.tabMisc);
+		this.setCreativeTab(CreativeTabs.tabTransport);
 	}
 	
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)

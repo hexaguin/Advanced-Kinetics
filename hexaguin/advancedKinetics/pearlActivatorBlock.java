@@ -8,7 +8,7 @@ public class pearlActivatorBlock extends Block {
 
 	public pearlActivatorBlock(int par1, Material par2Material) {
 		super(par1, par2Material);
-		this.setCreativeTab(CreativeTabs.tabDecorations);
+		this.setCreativeTab(CreativeTabs.tabTransport);
 	}
 
 }
