@@ -20,7 +20,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = AdvancedKinetics.modid, name = "Advanced Kinetics", version = "Beta 0.3")
+@Mod(modid = AdvancedKinetics.modid, name = "Advanced Kinetics", version = "Beta 0.8")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 public class AdvancedKinetics {
@@ -28,20 +28,22 @@ public class AdvancedKinetics {
 	
 	public static Block acceleratorBlock;
 	public static Block launcherBlock;
-	public static Block heartSandBlock;
 	public static Block gravityInverterBlock;
 	public static Block directionalLauncherBlock;
 	public static Block gravityWellBlock;
 	public static Block pearlActivatorBlock;
 	public static Block gravityNullifierBlock;
 	public static Block detectorBlock;
+	public static Block stopperBlock;
+	public static Block cautionBlock;
 	
 	public static Item itemRuggedPearl;
 	public static Item itemNegator;
+	public static Item itemBlockManipulator;
+	public static Item itemVortexPearl;
 	
 	public static int acceleratorID;
 	public static int launcherID;
-	public static int heartSandID;
 	public static int gravityInverterID;
 	public static int directionalLauncherID;
 	public static int gravityWellID;
@@ -50,6 +52,10 @@ public class AdvancedKinetics {
 	public static int gravityNullifierID;
 	public static int negatorID;
 	public static int detectorID;
+	public static int blockManipulatorID;
+	public static int vortexPearlID;
+	public static int stopperID;
+	public static int cautionID;
 	
 	public static Property gravityInverterRange;
 	public static Property gravityWellRange;
@@ -57,6 +63,8 @@ public class AdvancedKinetics {
 	public static Property detectorRange;
 	public static Property ruggedPearlLifespan;
 	public static Property airResistanceInNullifier;
+	public static Property stopperRange;
+	public static Property acceleratorSpeedLimit;
 	
 	private static int modEntityID = 0;
 
@@ -69,7 +77,7 @@ public class AdvancedKinetics {
 		
 		acceleratorID = config.getBlock("acceleratorID", 530).getInt();
 		launcherID = config.getBlock("launcherID", 531).getInt();
-		heartSandID = config.getBlock("heartSandID", 532).getInt();
+		stopperID = config.getBlock("stopperID", 532).getInt();
 		gravityInverterID = config.getBlock("gravityInverterID", 533).getInt();
 		directionalLauncherID = config.getBlock("directionalLauncherID", 534).getInt();
 		gravityWellID = config.getBlock("gravityWellID", 535).getInt();
@@ -78,11 +86,17 @@ public class AdvancedKinetics {
 		gravityNullifierID = config.getBlock("gravityNullifierID", 538).getInt();
 		negatorID = config.getItem("negatorID", 539).getInt();
 		detectorID = config.getBlock("detectorID", 540).getInt();
+		blockManipulatorID = config.getBlock("blockManipulatorID", 541).getInt();
+		vortexPearlID = config.getBlock("vortexPearlID", 542).getInt();
+		cautionID = config.getBlock("cautionID", 543).getInt();
 		
 		gravityInverterRange = config.get("tweaks", "gravityInverterRange", 8);
 		gravityWellRange = config.get("tweaks", "gravityWellRange", 16);
 		gravityWellPower = config.get("tweaks", "gravityWellPower", 100);
 		detectorRange = config.get("tweaks", "detectorRange", 8);
+		stopperRange = config.get("tweaks", "stopperRange", 8);
+		acceleratorSpeedLimit = config.get("tweaks", "AcceleratorSpeedLimit", 5, "Set limit to -1 to disable limiting. Must be an integer.");
+		
 		
 		ruggedPearlLifespan = config.get("tweaks", "ruggedPearlLifespan", 1600);
 		airResistanceInNullifier = config.get("tweaks", "airResistanceInNullifier", false);
@@ -99,7 +113,7 @@ public class AdvancedKinetics {
 		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityGravityWell.class, "TileEntityGravityWell");
 		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityGravityNullifier.class, "TileEntityGravityNullifier");
 		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityDetector.class, "TileEntityDetector");
-
+		GameRegistry.registerTileEntity(hexaguin.advancedKinetics.TileEntityStopper.class, "TileEntityStopper");
 		
         //adding blocks
 		acceleratorBlock = new BlockAcceleratorBlock(acceleratorID,Material.iron)
@@ -117,11 +131,6 @@ public class AdvancedKinetics {
         GameRegistry.registerBlock(launcherBlock, modid + launcherBlock.getUnlocalizedName().substring(5));
         LanguageRegistry.addName(launcherBlock, "Kinetic Vertical Velocity Enhancer");
         MinecraftForge.setBlockHarvestLevel(launcherBlock, "pickaxe", 1);
-        
-        heartSandBlock = new HeartSandBlock(heartSandID,Material.sand)
-        .setUnlocalizedName("heartSandBlock");
-        GameRegistry.registerBlock(heartSandBlock, modid + heartSandBlock.getUnlocalizedName().substring(5));
-        LanguageRegistry.addName(heartSandBlock, "Heartsand [WIP]");
         
         gravityInverterBlock = new GravityInverterBlock(gravityInverterID,Material.iron)
         .setHardness(1.5F)
@@ -165,6 +174,14 @@ public class AdvancedKinetics {
         LanguageRegistry.addName(gravityNullifierBlock, "Kinetic Gravity Nullifier");
         MinecraftForge.setBlockHarvestLevel(gravityNullifierBlock, "pickaxe", 1);
         
+        stopperBlock = new StopperBlock(stopperID,Material.iron)
+        .setHardness(1.5F)
+        .setTextureName("hexaguin_advancedkinetics:stopperBlock")
+        .setUnlocalizedName("stopperBlock");
+        GameRegistry.registerBlock(stopperBlock, modid + stopperBlock.getUnlocalizedName().substring(5));
+        LanguageRegistry.addName(stopperBlock, "Kinetic Stopper");
+        MinecraftForge.setBlockHarvestLevel(stopperBlock, "pickaxe", 1);
+        
        detectorBlock = new DetectorBlock(detectorID,Material.iron)
         .setHardness(1.5F)
         .setUnlocalizedName("detectorBlock");
@@ -174,6 +191,14 @@ public class AdvancedKinetics {
         LanguageRegistry.addName(new ItemStack(detectorBlock,1, 2), "Entity Detector");
         LanguageRegistry.addName(new ItemStack(detectorBlock,1, 3), "Player Detector");
         MinecraftForge.setBlockHarvestLevel(detectorBlock, "pickaxe", 1);
+        
+        cautionBlock = new CautionBlock(cautionID,Material.cloth)
+        .setHardness(1.5F)
+        .setTextureName("hexaguin_advancedkinetics:cautionBlock")
+        .setUnlocalizedName("cautionBlock");
+        GameRegistry.registerBlock(cautionBlock, modid + cautionBlock.getUnlocalizedName().substring(5));
+        LanguageRegistry.addName(cautionBlock, "Standardized Chromatic Safety Advisory Block");
+        MinecraftForge.setBlockHarvestLevel(stopperBlock, "pickaxe", 1);
         
         //items
         itemRuggedPearl = new ItemRuggedPearl(ruggedPearlID)
@@ -186,11 +211,24 @@ public class AdvancedKinetics {
         .setUnlocalizedName("itemNegator");
         LanguageRegistry.addName(itemNegator, "Kinetic Negator");
         
+        itemBlockManipulator = new ItemBlockManipulator(blockManipulatorID, 1)
+        .setTextureName("hexaguin_advancedkinetics:blockManipulator")
+        .setUnlocalizedName("itemBlockManipulator");
+        LanguageRegistry.addName(itemBlockManipulator, "Handheld Block Manipulator");
+        
+        itemVortexPearl = new ItemBlockManipulator(vortexPearlID, 2)
+        .setTextureName("hexaguin_advancedkinetics:vortexPearl")
+        .setUnlocalizedName("itemVortexPearl");
+        LanguageRegistry.addName(itemVortexPearl, "Vortex Pearl");
+        
         //adding entities
         
         EntityRegistry.registerModEntity(EntityRuggedPearl.class, "Rugged Pearl", ++modEntityID, this, 64, 10, true);
         RenderingRegistry.registerEntityRenderingHandler(EntityRuggedPearl.class, new RenderSnowball(itemRuggedPearl));
        
+        EntityRegistry.registerModEntity(EntityManipulatorPulse.class, "Manipulator Pulse", ++modEntityID, this, 64, 10, true);
+        RenderingRegistry.registerEntityRenderingHandler(EntityManipulatorPulse.class, new RenderSnowball(itemRuggedPearl));
+        
         //adding Recipes
         ItemStack accelerator = new ItemStack(acceleratorBlock);
         ItemStack accelerator16 = new ItemStack(acceleratorBlock,16);
@@ -210,6 +248,7 @@ public class AdvancedKinetics {
         ItemStack livingDetector = new ItemStack(detectorBlock,1,1);
         ItemStack playerDetector = new ItemStack(detectorBlock,1,3);
         ItemStack ownerDetector = new ItemStack(detectorBlock,1,0);
+        ItemStack cautionBlock9 = new ItemStack(cautionBlock,9);
         
         ItemStack quartz = new ItemStack(Item.netherQuartz);
         ItemStack redstone = new ItemStack(Item.redstone);
@@ -224,6 +263,8 @@ public class AdvancedKinetics {
         ItemStack stonePressurePlate = new ItemStack(70,1,0);
         ItemStack ironPressurePlate = new ItemStack(148,1,0);
         ItemStack goldPressurePlate = new ItemStack(147,1,0);
+        ItemStack blackWool = new ItemStack(Block.cloth,1,15);
+        ItemStack yellowWool = new ItemStack(Block.cloth,1,4);
         
         GameRegistry.addRecipe(accelerator16, new Object[] {
         	"XYX",
@@ -323,6 +364,13 @@ public class AdvancedKinetics {
         });
         GameRegistry.addShapelessRecipe(playerDetector, livingDetector, blazeRod);
         GameRegistry.addShapelessRecipe(ownerDetector, playerDetector, enderEye);
+        GameRegistry.addRecipe(cautionBlock9, new Object[]{
+        		"XXY",
+        		"XYX",
+        		"YXX",
+        		'X',blackWool,
+        		'Y',yellowWool
+        });
         
    	}
 }
